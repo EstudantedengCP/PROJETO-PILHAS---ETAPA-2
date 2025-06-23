@@ -1,6 +1,10 @@
 # 🧠 Interpretador REPL com Pilha (C)
-
+etapa 1
 Este projeto implementa um interpretador interativo (REPL) baseado em **estrutura de pilha**, com comandos simples simulando operações de máquina virtual.
+etapa 2 
+Atividade: Máquina Virtual Baseada em Pilha — Etapa 2 Descrição: 🎯 Objetivo Ampliar a funcionalidade do interpretador da máquina virtual baseado em pilha, implementando uma memória de variáveis usando uma lista encadeada. Esta etapa introduz o uso de variáveis nomeadas e operações entre elas.
+
+🧠 Conceitos Praticados Implementação e uso de lista encadeada Armazenamento e atualização de variáveis Integração entre estruturas de dados: pilha e lista
 
 ## 👨‍👩‍👧‍👦 Integrantes
 - ITALO FERNANDES MENDES COSTA
