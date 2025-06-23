@@ -1,33 +1,45 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+#include "interpret.h"
 #include "stack.h"
-#include "lista.h"
 
-extern struct stack s;
-extern struct list vars;
+static Stack* s;
 
-void interpret(char* line) {
-    char cmd[20], arg[20];
-    int x, found;
+void interpreter_init() {
+    s = new_stack(100);
+}
 
-    if (sscanf(line, "push %s", arg) == 1) {
-        if (sscanf(arg, "%d", &x) == 1) {
-            push(&s, x);  // Número inteiro
-        } else {
-            int val = get_variable(&vars, arg, &found);
-            if (found) {
-                push(&s, val);
-            } else {
-                printf("Erro: Variável '%s' não encontrada\n", arg);
-            }
-        }
-    } else if (sscanf(line, "pop %s", arg) == 1) {
-        if (pop(&s, &x)) {
-            set_variable(&vars, arg, x);
-        } else {
-            printf("Erro: pilha vazia\n");
-        }
+void interpret(const char* source) {
+    char op[10];
+    char arg[10];
+    sscanf(source, "%s %s", op, arg);
+
+    if (strcmp(op, "push") == 0) {
+        int value = atoi(arg);
+        stack_push(s, value);
+    } else if (strcmp(op, "pop") == 0) {
+        stack_pop(s);
+    } else if (strcmp(op, "add") == 0) {
+        int b = stack_pop(s);
+        int a = stack_pop(s);
+        stack_push(s, a + b);
+    } else if (strcmp(op, "sub") == 0) {
+        int b = stack_pop(s);
+        int a = stack_pop(s);
+        stack_push(s, a - b);
+    } else if (strcmp(op, "mul") == 0) {
+        int b = stack_pop(s);
+        int a = stack_pop(s);
+        stack_push(s, a * b);
+    } else if (strcmp(op, "div") == 0) {
+        int b = stack_pop(s);
+        int a = stack_pop(s);
+        if (b != 0) stack_push(s, a / b);
+        else printf("Erro: divisão por zero.\n");
+    } else if (strcmp(op, "print") == 0) {
+        stack_print(s);
+    } else {
+        printf("Comando inválido: %s\n", op);
     }
-    // outros comandos (add, sub, print etc.)
 }
